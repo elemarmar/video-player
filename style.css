@@ -10,7 +10,7 @@ html {
 body {
   margin: 0;
   min-height: 100vh;
-  background-color: #e3e3e3;
+  background-color: #1b1b1b;
   background-image: url("data:image/svg+xml,%3Csvg width='6' height='6' viewBox='0 0 6 6' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='%234f4f51' fill-opacity='0.4' fill-rule='evenodd'%3E%3Cpath d='M5 0h1L0 6V5zM6 5v1H5z'/%3E%3C/g%3E%3C/svg%3E");
   display: flex;
   justify-content: center;
@@ -31,18 +31,19 @@ body {
   background: black;
   position: relative;
   cursor: pointer;
+  overflow: hidden;
 }
 
 video {
   border-radius: 5px;
-
+  width: 100%;
+  height: auto;
 }
 
 /* Containers */
 .show-controls {
   width: 100%;
   height: 30%;
-  background: dodgerblue;
   z-index: 2;
   position: absolute;
   bottom: 0;
@@ -60,10 +61,16 @@ video {
   z-index: 5;
   display: flex;
   justify-content: space-between;
-
+  opacity: 0;
+  transition: all 0.5s ease-out 2s;
+  transform: translateY(10px);
 }
 
-
+.show-controls:hover .controls-container {
+  opacity: 1;
+  transform: translateY(0);
+  transition: all 0.5s ease-out;
+}
 
 .control-group {
   width: 100%;
@@ -83,21 +90,25 @@ video {
 
 /* Progress Bar */
 .progress-range {
-
+  height: 8px;
+  width: calc(100% - 30px);
+  background: rgba(202, 202, 202, 0.5);
   margin: auto;
   border-radius: 10px;
   position: absolute;
   left: 15px;
   top: 15px;
   cursor: pointer;
-
+  transition: height 0.1s ease-in-out;
 }
 
-
+.progress-range:hover {
+  height: 10px;
+}
 
 .progress-bar {
   background: var(--primary-color);
-  width: 50%;
+  width: 20%;
   height: 100%;
   border-radius: 10px;
   transition: all 0.5s ease;
@@ -166,10 +177,17 @@ video {
   margin-right: 15px;
 }
 
+select,
+option {
+  cursor: pointer;
+}
 
+select:focus {
+  outline: none;
+}
 
 select {
-
+  background: transparent;
   color: var(--font-color);
   border: none;
   font-size: 18px;
@@ -177,8 +195,6 @@ select {
   top: -2.5px;
   border-radius: 5px;
 }
-
-
 
 select > option {
   background: rgba(0, 0, 0, 0.9);
@@ -207,8 +223,10 @@ select > option {
 
 /* Media Query: Large Smartphone (Vertical) */
 @media screen and (max-width: 600px) {
-
-
+  .player {
+    min-width: 0;
+    max-width: 95vw;
+  }
   .fas {
     font-size: 20px;
   }
